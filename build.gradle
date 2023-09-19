@@ -1,0 +1,29 @@
+apply plugin: 'java'
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java']
+        }
+    }
+}
+
+
+jar {
+    manifest {
+        attributes(
+            'Main-Class': 'de.emilius123.Main'
+        )
+    }
+
+    from {
+        configurations.runtimeClasspath.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+}
+
+task runJar(type: JavaExec, dependsOn: jar) {
+    main = 'de.emilius123.Main'
+    classpath = sourceSets.main.runtimeClasspath
+}
