@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Array;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -31,8 +32,14 @@ public class Main {
 		
 		// Anfang AB Vollkommene + Erhabene Zahlen
 		//System.out.println(Arrays.toString(UebelKrassesMatheZeugUtil.teilerGetten(28)));
-		//System.out.println(UebelKrassesMatheZeugUtil.isVollkommen(496));
-		UebelKrassesMatheZeugUtil.findVollkommeneZahlen(11111111, true);
+		//System.out.println(UebelKrassesMatheZeugUtil.isVollkommen(new BigInteger("28")));
+		System.out.println(UebelKrassesMatheZeugUtil.findVollkommeneZahlen(100000, true));
+
+		//Beginn Mirkos Kram
+		//System.out.println(Arrays.toString(komischeZahlen.whatDivider(12)));
+		//komischeZahlen.isSublimeNumber(12);
+
+		//UebelKrassesMatheZeugUtil.findVollkommeneZahlen(10000, true);
 		//UebelKrassesMatheZeugUtil.isSublime(12);
 		
 		//executeSkillDetector();

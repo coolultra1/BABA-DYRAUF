@@ -1,5 +1,6 @@
 package de.emilius123;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -25,17 +26,38 @@ public class UebelKrassesMatheZeugUtil {
 			Object[] babaArray = teiler.toArray(); // JRE 19 ist ein Spast
 			return objectArrayToIntArray(babaArray);
 		}
+
+	public static ArrayList<BigInteger> teilerGetten(BigInteger baba) {
+		ArrayList<BigInteger> teiler = new ArrayList<>();
+
+		// Da es keine cleanen Teiler, die kleiner als 2 sind geben kann, loop nur bis die Hälfte + 1 (sodass die Hälfte noch drinnen ist)
+		for(BigInteger i = BigInteger.ONE; !i.equals(baba.divide(BigInteger.TWO).add(BigInteger.ONE)); i = i.add(BigInteger.ONE)) {
+			if(baba.remainder(i).equals(BigInteger.ZERO)) {
+				System.out.println("Teiler gefunden: " + i.toString());
+
+				teiler.add(i);
+			}
+		}
+
+		return teiler;
+	}
 		
 		/**
 		 * Gettet, ob eine Zahl clean vollkommen ist oder halt nicht 
 		 * 
-		 * @param baba Die Zahl, deren Sauberkeit zu ermittelt ist
+		 * @param toCheck Die Zahl, deren Sauberkeit zu ermittelt ist
 		 * @return Ob die Zahl �bel clean ist, oder nicht
 		 */
 		public static boolean isVollkommen(int toCheck) {
 			int[] teiler = teilerGetten(toCheck);
 			
 			return addArrayValues(teiler) == toCheck;
+		}
+
+		public static boolean isVollkommen(BigInteger toCheck) {
+			ArrayList<BigInteger> teiler = teilerGetten(toCheck);
+
+			return addArrayValues(teiler).equals(toCheck);
 		}
 		
 		public static int[] findVollkommeneZahlen(int range, boolean drecksKonsoleZuspammen) {
@@ -61,7 +83,7 @@ public class UebelKrassesMatheZeugUtil {
 		public static boolean isSublime(int zahl) {
 			int[] teiler = teilerGetten(zahl);
 			boolean isTeilerAnzahlVollkommen = isVollkommen(teiler.length + 1); // +1, da teilerGetten() die Zahl selbst, die theoretisch auch ein Teiler ist, nicht berücksichtigt
-			boolean isTeilerSummeVollkommen = isVollkommen(addArrayValues(teiler) + zahl);
+			boolean isTeilerSummeVollkommen = isVollkommen(addArrayValues(teiler) + zahl); // +zahl, da teiletGetten() die Zahl selbst nicht berücksichtigt
 			
 			boolean isSublime = (isTeilerAnzahlVollkommen && isTeilerSummeVollkommen);
 			
@@ -80,6 +102,16 @@ public class UebelKrassesMatheZeugUtil {
 				arraySumme = arraySumme + array[i];
 			}
 			
+			return arraySumme;
+		}
+
+		private static BigInteger addArrayValues(ArrayList<BigInteger> array) {
+			BigInteger arraySumme = BigInteger.ZERO;
+
+			for(BigInteger i = BigInteger.ZERO; !i.equals(BigInteger.valueOf(array.size())); i = i.add(BigInteger.ONE)) {
+				arraySumme = arraySumme.add(array.get(Integer.valueOf(i.toString())));
+			}
+
 			return arraySumme;
 		}
 		
